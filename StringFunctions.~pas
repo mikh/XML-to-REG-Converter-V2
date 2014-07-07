@@ -1,0 +1,45 @@
+unit StringFunctions;
+
+interface
+	uses
+		IntegerList, SysUtils, Classes;
+
+	function findPattern(text:string; pattern:string)              : TIntegerList;
+	function getLastSubstring(text:string; pattern:string)         : string;
+	function findStringInStringList(text:string; list:TStringList) : integer;
+
+implementation
+
+function findPattern(text:string; pattern:string) : TIntegerList;
+  var
+  	ii:integer;
+  begin
+  	result := TIntegerList.create;
+  	for ii := 1 to (length(text) - length(pattern)) do
+  	  begin
+  	  	if AnsiCompareStr(copy(text, ii, length(pattern)), pattern) = 0 then
+  	  		result.addInt(ii);
+  	  end;
+  end;
+
+function getLastSubstring(text:string; pattern:string) : string;
+  var
+    list:TIntegerList;
+  begin
+  	list := findPattern(text, pattern);
+  	result := copy(text, list.getInt(list.countInt - 1) + length(pattern), length(text));
+  end;
+
+function findStringInStringList(text:string; list:TStringList) : integer;
+  var
+  	ii:integer;
+  begin
+  	result := -1;
+  	for ii := 0 to list.count -1 do
+  	  begin
+  	  	if AnsiCompareStr(text, list[ii]) = 0 then
+  	  		result := ii;
+  	  end;
+  end;
+
+end.
