@@ -2,12 +2,17 @@ program Converter_v2;
 
 uses
   Forms,
-  Converter in 'Converter.pas' {Form1};
+  Converter in 'Converter.pas' {MainForm},
+  Defines in 'Defines.pas',
+  StringFunctions in 'StringFunctions.pas',
+  IntegerList in 'IntegerList.pas',
+  AddFolderForm in 'AddFolderForm.pas' {AddFolder};
 
 {$R *.res}
 
 begin
   Application.Initialize;
-  Application.CreateForm(TForm1, Form1);
+  Application.CreateForm(TMainForm, MainForm);
+  Application.CreateForm(TAddFolder, AddFolder);
   Application.Run;
 end.

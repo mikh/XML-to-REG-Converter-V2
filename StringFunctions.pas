@@ -5,6 +5,7 @@ interface
 		IntegerList, SysUtils, Classes;
 
 	function findPattern(text:string; pattern:string)                                                          : TIntegerList;
+	function findSinglePatternAfterIndex(text, pattern:string; index : integer)                                : integer;
 	function getLastSubstring(text:string; pattern:string)                                                     : string;
 	function findStringInStringList(text:string; list:TStringList)                                             : integer;
 	function getNextSection(str:string; opening_sequences, closing_sequences:TStringList; start_index:integer) : string;
@@ -20,6 +21,23 @@ function findPattern(text:string; pattern:string) : TIntegerList;
   	  begin
   	  	if (AnsiCompareStr(copy(text, ii, length(pattern)), pattern) = 0) then
   	  		result.addInt(ii);
+  	  end;
+  end;
+
+function findSinglePatternAfterIndex(text, pattern:string; index : integer) : integer; 
+  var
+    ii:integer;
+    substring : string;
+  begin
+  	result := -1;
+  	for ii := index to (length(text) - length(pattern) + 1) do
+  	  begin
+  	  	substring := copy(text, ii, length(pattern));
+  	  	if (AnsiCompareStr(pattern, substring) = 0) then
+  	  	  begin
+  	  	  	result := ii;
+  	  	  	break;
+  	  	  end;
   	  end;
   end;
 

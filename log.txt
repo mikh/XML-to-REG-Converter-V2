@@ -189,15 +189,3 @@ Converting DSPI_2.xml
 Parsing DSPI_2.xml
 Converting DSPI_3.xml
 Parsing DSPI_3.xml
-Converting DSPI_4.xml
-Parsing DSPI_4.xml
-Converting DSPI_5.xml
-Parsing DSPI_5.xml
-Converting DSPI_6.xml
-Parsing DSPI_6.xml
-Converting DTS.xml
-Parsing DTS.xml
-Converting EBI.xml
-Parsing EBI.xml
-Converting eDMA_0.xml
-Parsing eDMA_0.xml

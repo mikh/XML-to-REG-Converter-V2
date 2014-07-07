@@ -2,9 +2,14 @@ unit XML_Parser;
 
 interface
 
+uses
+  Classes, SysUtils;
+
   type TXML_Parser = class
   	private
+  		opening_sequences, closing_sequences : TStringList;
   		function loadXML(filename:string) : string;
+  		function updateIndex(text, pattern:string; index:integer) : integer;
   	public
   		constructor create;
   		procedure parseXML(filename:string);
@@ -12,11 +17,36 @@ interface
 
 implementation
 
+uses
+	StringFunctions, Dialogs;
+
+constructor TXML_Parser.create;
+begin
+	opening_sequences := TStringList.create;
+	closing_sequences := TStringList.create;
+	opening_sequences.add('<');
+	closing_sequences.add('>');
+	opening_sequences.add('\"');
+	closing_sequences.add('\"');
+	opening_sequences.add('>');
+	closing_sequences.add('<');
+end;
+
 procedure TXML_Parser.parseXML(filename:string);
 var
   xml : string;
+  line : string;
+  index : integer;
 begin
   xml := loadXML(filename);
+  index := 1;
+  line := getNextSection(xml, opening_sequences, closing_sequences, index);
+  while (AnsiCompareStr(line, '') <> 0) do
+  	begin
+  	  ShowMessage(line);
+  	  index := updateIndex(xml, line, index);
+  	  line := getNextSection(xml, opening_sequences, closing_sequences, index); 
+  	end;
 end;
 
 
@@ -38,5 +68,13 @@ begin
   CloseFile(f);
 end;
 
+function updateIndex(text, pattern:string; index:integer) : integer;
+begin
+  result := findSinglePatternAfterIndex(text, pattern, index);
+  if(result = -1) then
+  	ShowMessage('XML_Parser Error :: findSinglePatternAfterIndex returned -1')
+  else
+  	result := result + length(pattern) - 1;
+end;
 
 end.
